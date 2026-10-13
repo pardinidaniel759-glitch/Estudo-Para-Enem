@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#080c14">
+<title>ENEM Lab — Simulado e Redação</title>
+<style>
+:root{--bg:#080c14;--s1:#111827;--s2:#1d283d;--ln:#27344d;--tx:#e8edf7;--mu:#8fa0bf;--ac:#ffb703;--ok:#5fd4a0;--er:#ff7a8a;
+--h:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;--b:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif}
+*{box-sizing:border-box;margin:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--tx);font:17px/1.6 var(--b);min-height:100vh;padding-bottom:env(safe-area-inset-bottom)}
+button,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.badge{background:var(--er);color:#1a0b10;border-radius:99px;font-size:.7rem;padding:1px 7px;margin-left:4px;font-weight:700}
+main{max-width:960px;margin:auto;padding:8px 18px 24px}
+h1,h2,h3{font-family:var(--h);line-height:1.2;letter-spacing:-.01em}
+h1{font-size:1.7rem;margin:10px 0 6px}h2{font-size:1.15rem;margin:22px 0 10px}
+p.lead{color:var(--mu);margin-bottom:16px}
+.card{background:var(--s1);border:1px solid var(--ln);border-radius:14px;padding:18px;margin-bottom:14px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+@media(min-width:700px){.grid{grid-template-columns:repeat(4,1fr)}}
+.stat{background:var(--s1);border:1px solid var(--ln);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:2px}
+.stat span{font:500 .8rem var(--h);color:var(--mu)}.stat b{font:700 1.6rem var(--h)}.stat small{color:var(--mu);font-size:.78rem}
+.stat i{display:block;height:5px;border-radius:5px;background:var(--s2);position:relative;overflow:hidden;margin:4px 0}
+.stat i::after{content:"";position:absolute;inset:0;width:var(--p);background:var(--c)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.chip{background:var(--s2);border:1px solid var(--ln);border-radius:99px;padding:7px 14px;font:500 .9rem var(--h)}
+.chip[aria-pressed=true]{background:var(--ac);color:#241a00;border-color:var(--ac)}
+.btn{background:var(--ac);color:#241a00;border:0;border-radius:10px;padding:12px 20px;font:700 1rem var(--h)}
+.btn.ghost{background:var(--s2);color:var(--tx);border:1px solid var(--ln)}
+.btn.sm{padding:7px 12px;font-size:.85rem}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.top{display:flex;justify-content:space-between;align-items:center;color:var(--mu);font:500 .9rem var(--h);margin-bottom:10px}
+.tag{display:inline-flex;align-items:center;gap:6px;font:500 .8rem var(--h);color:var(--mu)}
+.tag::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--c)}
+.q{font-size:1.08rem;margin:8px 0 16px;white-space:pre-line}
+.alt{display:flex;gap:12px;width:100%;text-align:left;background:var(--s2);border:1px solid var(--ln);border-radius:12px;padding:13px 14px;margin-bottom:9px;line-height:1.45}
+.alt b{font:700 .95rem var(--h);color:var(--ac);min-width:1.1em}
+.alt:not(:disabled):hover{border-color:var(--ac)}
+.alt.ok{border-color:var(--ok);background:rgba(95,212,160,.12)}.alt.ok b{color:var(--ok)}
+.alt.no{border-color:var(--er);background:rgba(255,122,138,.12)}.alt.no b{color:var(--er)}
+.alt:disabled{cursor:default;color:var(--tx)}
+.fb{border-left:4px solid var(--ac);background:var(--s2);border-radius:0 12px 12px 0;padding:12px 14px;margin:14px 0}
+.fb.ok{border-color:var(--ok)}.fb.no{border-color:var(--er)}.fb strong{font-family:var(--h)}
+.big{font:700 3rem var(--h);color:var(--ac)}
+.bar{height:8px;background:var(--s2);border-radius:8px;overflow:hidden}.bar i{display:block;height:100%;width:0;background:var(--ok);transition:width .25s}
+.mu{color:var(--mu)}.empty{text-align:center;padding:30px 10px;color:var(--mu)}
+select{background:var(--s2);border:1px solid var(--ln);border-radius:10px;padding:10px 12px;width:100%;font-family:var(--h)}
+textarea{width:100%;min-height:420px;resize:vertical;background:var(--s1);border:1px solid var(--ln);border-radius:12px;padding:14px;line-height:1.8;font-family:var(--b);font-size:1.02rem}
+.rs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0}
+.rs div{background:var(--s1);border:1px solid var(--ln);border-radius:12px;padding:10px;text-align:center}
+.rs b{display:block;font:700 1.5rem var(--h)}.rs span{font:.78rem var(--h);color:var(--mu)}
+.msg{font:500 .9rem var(--h);margin:8px 0 14px;min-height:1.4em}
+.ck{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--ln);font-size:.95rem}
+.ck:last-child{border:0}.ck input{margin-top:6px;accent-color:var(--ac);width:18px;height:18px;flex:none}
+.ck small{color:var(--mu);display:block}
+.err h3{font-size:1rem;margin:6px 0}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+header{position:sticky;top:0;z-index:5;background:rgba(8,12,20,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--ln)}
+.hd{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px 16px;max-width:960px;margin:auto;padding:12px 18px;padding-top:calc(12px + env(safe-area-inset-top))}
+.brand{font:800 1.35rem var(--h);display:flex;align-items:center;gap:9px;letter-spacing:-.02em}
+.brand i{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,#ffb703,#fb8500);display:grid;place-items:center;color:#1a1000;font:800 1rem var(--h)}
+.brand span{color:var(--ac)}
+nav{display:flex;gap:6px;overflow-x:auto;max-width:100%;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav button{white-space:nowrap;background:var(--s1);border:1px solid var(--ln);border-radius:99px;padding:8px 15px;font:600 .88rem var(--h);color:var(--mu)}
+nav button:hover{color:var(--tx)}
+nav button[aria-current=page]{background:var(--ac);color:#1a1000;border-color:var(--ac)}
+nav .badge{background:var(--er);color:#1a0b10}
+@media(max-width:640px){.hd nav{width:100%}}
+details.card{padding:0}
+summary{list-style:none;display:flex;align-items:center;gap:8px;padding:15px 18px;font:700 1rem var(--h);cursor:pointer}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"\25B8";color:var(--mu)}details[open] summary::before{content:"\25BE"}
+summary span{flex:1}summary em{font-style:normal;color:var(--ac);font-size:.85rem}
+details[open] summary{border-bottom:1px solid var(--ln)}
+details .ck{padding:12px 18px}
+</style>
+</head>
+<body>
+<header><div class="hd">
+  <div class="brand"><i>E</i>ENEM <span>Lab</span></div>
+  <nav aria-label="Seções">
+    <button data-t="sim">Simulado</button>
+    <button data-t="err">Caderno de Erros<span id="bd" class="badge" hidden></span></button>
+    <button data-t="red">Redação</button>
+    <button data-t="edi">Edital Verticalizado</button>
+  </nav></div></header>
+<main id="app"></main>
+
+<script>
+/* ===== Utilidades e armazenamento ===== */
+const $=s=>document.querySelector(s);
+const ld=(k,d)=>{try{const v=localStorage.getItem('enemlab:'+k);return v?JSON.parse(v):d}catch(e){return d}};
+const sv=(k,v)=>{try{localStorage.setItem('enemlab:'+k,JSON.stringify(v));return true}catch(e){return false}};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const shuf=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const L='ABCDE';
+const AREAS={hum:['Ciências Humanas','#ff9f7a'],lin:['Linguagens','#8fb4ff'],nat:['Ciências da Natureza','#5fd4a0'],mat:['Matemática','#ffd166']};
+
+/* ===== Banco de questões autorais (a 1ª alternativa é sempre a correta; a ordem é embaralhada na tela) ===== */
+const q=(a,t,o,e)=>({a,t,o,e});
+const Q=[
+q('mat',"Uma loja aumentou em 25% o preço de uma camiseta que custava R$ 80,00. Em uma liquidação, aplicou 20% de desconto sobre o preço já reajustado.\n\nO preço final da camiseta, em reais, é:",["80,00","75,00","85,00","100,00","105,00"],"Após o aumento: 80 × 1,25 = 100. Com 20% de desconto: 100 × 0,80 = 80. Descontos e aumentos sucessivos incidem sobre bases diferentes, por isso não se anulam por soma simples, mas aqui 1,25 × 0,80 = 1, voltando ao valor original."),
+q('mat',"Cinco máquinas idênticas produzem 200 peças em 4 horas de funcionamento. Uma fábrica vai usar 8 dessas máquinas durante 5 horas.\n\nNesse período, o número de peças produzidas será:",["400","320","360","450","500"],"Cada máquina produz 200 ÷ 5 ÷ 4 = 10 peças por hora. Com 8 máquinas por 5 horas: 8 × 5 × 10 = 400 peças (grandezas diretamente proporcionais)."),
+q('mat',"Uma urna contém 3 bolas vermelhas, 5 azuis e 2 verdes, todas iguais ao tato. Duas bolas são retiradas ao acaso, uma após a outra, sem reposição.\n\nA probabilidade de ambas serem vermelhas é:",["1/15","3/20","9/100","1/10","1/5"],"Primeira vermelha: 3/10. Sem reposição, restam 2 vermelhas em 9 bolas: 2/9. Probabilidade conjunta: 3/10 × 2/9 = 6/90 = 1/15."),
+q('mat',"Um aluno obteve 5,0; 6,5; 7,0 e 7,5 nas quatro primeiras provas do ano. A escola exige média aritmética mínima de 7,0 considerando cinco provas.\n\nA menor nota que ele precisa tirar na quinta prova é:",["9,0","7,0","8,0","8,5","10,0"],"A soma atual é 26. Para média 7 em cinco provas, a soma deve ser 35. Logo, 35 − 26 = 9,0."),
+q('mat',"Uma piscina em forma de bloco retangular mede 10 m de comprimento, 4 m de largura e 1,5 m de profundidade. Ela será totalmente cheia por uma bomba com vazão constante de 2.000 litros por hora. (Considere 1 m³ = 1.000 L.)\n\nO tempo necessário para encher a piscina é de:",["30 horas","20 horas","24 horas","36 horas","40 horas"],"Volume = 10 × 4 × 1,5 = 60 m³ = 60.000 L. Tempo = 60.000 ÷ 2.000 = 30 horas."),
+q('mat',"Uma locadora cobra, por dia, uma taxa fixa de R$ 120,00 mais R$ 0,80 por quilômetro rodado. Um cliente pagou R$ 280,00 pela diária.\n\nA distância percorrida por ele, em quilômetros, foi de:",["200","150","180","220","350"],"Função afim: C = 120 + 0,8x. Com C = 280: 0,8x = 160, logo x = 200 km."),
+q('nat',"Após fortes chuvas, o esgoto doméstico de um bairro passou a chegar a um lago, rico em nitrogênio e fósforo. Semanas depois, houve proliferação intensa de algas na superfície e mortandade de peixes.\n\nA causa direta da morte dos peixes foi:",["a queda do oxigênio dissolvido, consumido na decomposição da matéria orgânica por microrganismos","a toxicidade do fósforo, que paralisa as brânquias dos peixes","o aumento da luz que atravessa a água, danificando os peixes","a falta de gás carbônico para a respiração dos peixes","o excesso de oxigênio produzido pelas algas"],"É a eutrofização: o excesso de nutrientes favorece algas; ao morrerem, são decompostas por microrganismos aeróbios que consomem o oxigênio da água, causando asfixia dos peixes."),
+q('nat',"Um motorista percorre 150 km em 2 horas e, em seguida, mais 90 km em 1 hora, sem paradas.\n\nA velocidade escalar média em todo o trajeto, em km/h, é:",["80","75","90","100","120"],"Velocidade média = distância total ÷ tempo total = (150 + 90) ÷ (2 + 1) = 240 ÷ 3 = 80 km/h. Não é a média simples das velocidades parciais (75 e 90)."),
+q('nat',"A queima de combustíveis fósseis com enxofre libera dióxido de enxofre (SO₂) na atmosfera. Ao reagir com água e oxigênio, forma ácido sulfúrico, que acidifica a chuva e corrói monumentos e solos.\n\nUma medida que ataca diretamente a origem desse problema é:",["reduzir o teor de enxofre nos combustíveis e ampliar o uso de fontes renováveis","aumentar a altura das chaminés industriais","adicionar cal em todos os rios do país","substituir monumentos de pedra por concreto","ampliar o uso de combustíveis fósseis em áreas rurais"],"A ação mais eficaz é evitar a emissão de SO₂: dessulfurar combustíveis e trocar fontes fósseis por renováveis. Chaminés mais altas apenas dispersam o poluente."),
+q('nat',"Durante uma campanha de saúde, um agente explicou que a vacina não causa a doença, mas prepara o organismo para combatê-la.\n\nBiologicamente, isso ocorre porque a vacina:",["estimula a produção de anticorpos e de células de memória imunológica","fornece anticorpos prontos, que agem por toda a vida","destrói diretamente todos os microrganismos do corpo","altera o DNA das células para torná-las resistentes","substitui o sistema imunológico por defesas artificiais"],"A vacina apresenta antígenos (agentes atenuados, inativados ou fragmentos) que ativam a resposta imune adaptativa, gerando anticorpos e células de memória que respondem rápido num contato futuro."),
+q('nat',"Um chuveiro elétrico de potência 5.500 W é usado durante 20 minutos por dia, ao longo de 30 dias.\n\nA energia elétrica consumida nesse período, em kWh, é de:",["55","18,3","36,7","110","165"],"Potência = 5,5 kW. Tempo total = 20 min × 30 = 600 min = 10 h. Energia = 5,5 × 10 = 55 kWh."),
+q('nat',"O albinismo oculocutâneo é condição autossômica recessiva. Um casal sem albinismo, ambos heterozigotos (Aa), deseja ter um filho.\n\nA probabilidade de a criança nascer com albinismo é de:",["25%","0%","50%","75%","100%"],"Cruzamento Aa × Aa gera AA, Aa, Aa e aa na proporção 1:2:1. Apenas aa (1 em 4) manifesta albinismo: 25%."),
+q('hum',"No século XIX, a expansão das fábricas na Inglaterra atraiu multidões do campo para cidades como Manchester. Muitos trabalhadores passaram a viver em bairros sem saneamento e a cumprir jornadas superiores a 12 horas.\n\nO processo descrito está associado, na Revolução Industrial, à:",["urbanização acelerada e formação de uma classe operária submetida a condições precárias","valorização do trabalho artesanal e fim do assalariamento","redução da população urbana pela volta ao campo","garantia imediata de direitos trabalhistas por lei","ampliação do poder político dos senhores feudais"],"A industrialização concentrou pessoas nas cidades, sem infraestrutura, e consolidou o proletariado assalariado. Os direitos trabalhistas só vieram depois, após lutas sindicais e operárias."),
+q('hum',"Em grandes cidades, é comum que o centro registre temperaturas mais altas que os arredores arborizados. Esse fenômeno é conhecido como ilha de calor.\n\nUm fator que contribui para ele é:",["a impermeabilização do solo e a escassez de áreas verdes, que retêm calor e reduzem a evaporação","a abundância de vegetação, que absorve toda a radiação solar","a ausência de edificações altas, que facilita a circulação do vento","o aumento de áreas de várzea, que umedecem o ar","a baixa emissão de calor por veículos e indústrias"],"Asfalto e concreto absorvem e retêm calor; sem vegetação há menos sombra e evapotranspiração. Edifícios altos ainda dificultam a ventilação."),
+q('hum',"Para Thomas Hobbes, no estado de natureza os indivíduos vivem em permanente insegurança, pois todos têm direito a tudo e ninguém tem garantias contra o outro.\n\nSegundo esse pensador, o Estado se justifica porque:",["um poder soberano forte, criado por pacto, evita a guerra de todos contra todos e garante a paz","a natureza humana é essencialmente boa e dispensa regras","o governo deve existir apenas para proteger a propriedade da Igreja","a vontade divina é a única fonte legítima de leis","o povo deve poder depor o governante a qualquer momento"],"Em Hobbes, o contrato social transfere poder a um soberano capaz de impor a ordem e proteger a vida. A ideia de direito de resistência aproxima-se mais de Locke."),
+q('hum',"A Consolidação das Leis do Trabalho (CLT), de 1943, reuniu normas sobre jornada, férias, salário mínimo e carteira de trabalho. O governo de Getúlio Vargas, ao mesmo tempo, regulamentou a organização sindical, subordinando-a ao Estado.\n\nO caráter dessa legislação foi o de:",["conceder direitos aos trabalhadores urbanos enquanto o Estado controlava e integrava a classe trabalhadora","eliminar a intervenção do Estado nas relações de trabalho","atender apenas aos trabalhadores rurais","permitir a livre criação de sindicatos autônomos","restringir direitos trabalhistas para estimular a indústria"],"A CLT ampliou direitos sociais, mas com sindicatos atrelados ao Ministério do Trabalho, o que garantiu legitimidade e controle político ao governo."),
+q('hum',"Entre as décadas de 1950 e 1980, milhões de brasileiros deixaram o campo em direção às cidades. Nesse período, houve mecanização da agricultura, concentração de terras e expansão do emprego industrial nos centros urbanos.\n\nO fenômeno descrito é o:",["êxodo rural, impulsionado por fatores de expulsão do campo e de atração das cidades","êxodo urbano, causado pela desindustrialização","movimento pendular diário entre cidades-dormitório","migração sazonal para a colheita","processo de colonização de fronteiras agrícolas"],"O êxodo rural combinou fatores de expulsão (mecanização e concentração fundiária) e de atração (emprego industrial e serviços), acelerando a urbanização brasileira."),
+q('hum',"A Lei Áurea (1888) extinguiu a escravidão no Brasil, mas não previu reforma agrária, acesso à educação nem indenização ou inserção produtiva para as pessoas libertas.\n\nUma consequência histórica dessa omissão foi:",["a marginalização socioeconômica da população negra no pós-abolição, com reflexos de desigualdade até hoje","a integração plena e imediata dos libertos ao mercado de trabalho","a distribuição de terras às famílias libertas","a extinção do racismo na sociedade brasileira","o fim das desigualdades regionais"],"A abolição sem políticas de inclusão deixou os libertos sem terra, moradia e escolarização, o que ajuda a explicar desigualdades raciais persistentes."),
+q('lin',"— Mano, bora no rolê hoje?\n— Bora! Só vou trocar de roupa e já te encontro.\n\nO diálogo, entre dois jovens, ilustra:",["a variação linguística de registro informal, adequada ao contexto e ao grupo social dos falantes","um desvio gramatical que impede a comunicação","o uso de linguagem formal típica de textos jurídicos","a imposição da norma-padrão como única forma correta","a perda de vocabulário na língua portuguesa"],"Expressões como «bora» e «rolê» marcam registro informal e pertencem a um grupo; a comunicação é bem-sucedida, logo é variação adequada à situação, não erro."),
+q('lin',"«A metrópole engole quem chega sem pressa.»\n\nNesse enunciado, a figura de linguagem predominante é:",["metáfora, pois a cidade é descrita como um ser que devora, sugerindo seu caráter opressor","hipérbole, pois exagera a quantidade de pessoas","antítese, pois contrapõe duas palavras de sentido oposto","ironia, pois diz o contrário do que pensa","eufemismo, pois suaviza uma ideia desagradável"],"Atribuir à cidade o ato de «engolir» é uma imagem figurada (metáfora, com traço de personificação) que sugere uma metrópole que consome quem não acompanha seu ritmo."),
+q('lin',"Cartaz de campanha: «Doe sangue hoje. Alguém espera por você.»\n\nA função da linguagem predominante no texto é:",["conativa (apelativa), pois busca convencer o leitor a agir","referencial, pois apenas informa dados objetivos","poética, pois valoriza a forma da mensagem","metalinguística, pois fala sobre o próprio código","fática, pois testa o canal de comunicação"],"O uso do imperativo («Doe») e a menção direta ao interlocutor («você») revelam a função conativa, centrada no receptor, típica de campanhas e anúncios."),
+q('lin',"«O hábito de checar o celular a cada minuto não nasce da necessidade de informação, mas do desconforto com o vazio. Cada notificação promete uma recompensa que raramente chega, e mesmo assim voltamos a procurá-la.»\n\nSegundo o texto, o uso compulsivo do aparelho decorre:",["da busca por alívio do desconforto e da expectativa de uma recompensa incerta","da necessidade real de se manter bem informado","da obrigação profissional de responder a mensagens","da ausência de notificações no aparelho","do baixo custo dos planos de internet"],"O autor nega que a causa seja informacional («não nasce da necessidade de informação») e a atribui ao desconforto com o vazio e à promessa de recompensa de cada notificação."),
+q('lin',"Em «Embora estudasse todos os dias, ele não passou no vestibular», a oração iniciada por «embora» expressa:",["concessão, pois indica um fato que contraria a expectativa criada pela outra oração","causa, pois explica o motivo da reprovação","finalidade, pois indica o objetivo dos estudos","condição, pois estabelece uma hipótese","comparação, pois equipara dois elementos"],"«Embora» é conjunção concessiva: estudar muito levaria a esperar aprovação, mas ocorreu o oposto. A concessão marca esse contraste inesperado."),
+q('lin',"A Semana de Arte Moderna de 1922 propôs rever a produção cultural brasileira, criticando o academicismo e defendendo uma arte livre, atenta à realidade do país.\n\nUma característica da primeira fase do Modernismo brasileiro é:",["a ruptura com padrões tradicionais, com valorização da língua falada e de temas nacionais","a imitação rigorosa de modelos clássicos europeus","a exaltação idealizada do Brasil e do indígena como herói","o uso exclusivo de rimas e métrica fixas","a rejeição de qualquer influência estrangeira"],"Os modernistas romperam com o academicismo, adotaram verso livre, linguagem coloquial e temas do cotidiano e da identidade brasileira. Também dialogaram com as vanguardas europeias.")
+];
+
+/* ===== Temas de redação autorais ===== */
+const TEMAS=[
+["Desafios para reduzir o desperdício de alimentos no Brasil","Repertório possível: fome e insegurança alimentar, cadeia logística, educação do consumidor, bancos de alimentos."],
+["Caminhos para ampliar o acesso à saúde mental no Brasil","Repertório possível: direito à saúde na Constituição, estigma social, rede de atenção psicossocial (CAPS), telemedicina."],
+["Impactos do uso excessivo de telas na formação de crianças e adolescentes","Repertório possível: economia da atenção, sono e aprendizagem, papel da família e da escola, letramento digital."],
+["Desinformação e seus efeitos sobre a democracia brasileira","Repertório possível: pós-verdade, algoritmos, educação midiática, responsabilização das plataformas."]
+];
+const GUIA=[
+["1º parágrafo · Introdução",["Contextualização do tema com repertório sociocultural","Tese: posicionamento claro sobre o problema","Anúncio dos dois argumentos que serão desenvolvidos"]],
+["2º parágrafo · Desenvolvimento 1",["Tópico frasal com o primeiro argumento","Repertório legitimado (dado, lei, pensador, obra ou fato histórico)","Análise própria ligando o repertório à tese","Fechamento retomando a ideia central"]],
+["3º parágrafo · Desenvolvimento 2",["Conectivo de progressão e tópico frasal do segundo argumento","Repertório diferente do usado no D1","Análise própria ligando o repertório à tese","Fechamento retomando a ideia central"]],
+["4º parágrafo · Proposta de intervenção (5 elementos)",["Agente: quem executa a ação (governo, escola, mídia, ONG...)","Ação: o que deve ser feito","Meio/modo: como a ação será realizada","Finalidade: para que, com qual resultado","Detalhamento: exemplo ou explicação de um dos elementos anteriores"]]
+];
+const ED=[
+["Aritmética, Razões e Juros",[
+["Operações em Problemas","Traduza o enunciado em contas, atento às unidades."],
+["Frações e Decimais","Equivalência, comparação, operações e conversão entre fração, decimal e %."],
+["Porcentagem","Fator de multiplicação: aumento de 20% = × 1,20; desconto de 15% = × 0,85."],
+["Razão","Comparação entre duas grandezas por divisão: a/b."],
+["Proporção","Igualdade entre razões: a/b = c/d, logo a·d = b·c."],
+["Regra de Três","Simples ou composta; identifique se é direta ou inversa."],
+["Escalas","Escala = medida no desenho ÷ medida real (na mesma unidade)."],
+["Juros","Simples: J = C·i·t. Compostos: M = C·(1 + i)^t."]]],
+["Equações e Funções",[
+["Equações","1º grau e sistemas: isole a incógnita e confira a solução."],
+["Função do 2º Grau","f(x) = ax² + bx + c. Se a > 0, concavidade para cima; se a < 0, para baixo."],
+["Cálculo do Delta","Δ = b² − 4ac. Δ > 0: duas raízes reais; Δ = 0: uma; Δ < 0: nenhuma real."],
+["Fórmula de Bhaskara","x = (−b ± √Δ) ÷ 2a. Soma das raízes = −b/a; produto = c/a."],
+["Vértice da Parábola","Xv = −b ÷ 2a e Yv = −Δ ÷ 4a: ponto de máximo ou de mínimo."]]],
+["Medidas, Estatística e Geometria",[
+["Unidades de Medida","Comprimento, área, volume, capacidade, massa e tempo. 1 m³ = 1.000 L."],
+["Estatística: Média, Moda e Mediana","Média = soma ÷ quantidade; moda = mais frequente; mediana = valor central dos dados ordenados."],
+["Geometria Plana","Áreas e perímetros, Pitágoras, semelhança de triângulos e circunferência."],
+["Geometria Espacial","Prisma e cilindro: V = área da base × altura; pirâmide e cone: 1/3 disso; esfera: 4/3·π·r³."]]]
+];
+
+/* ===== Estado ===== */
+const S={tab:'sim',sel:'all',n:10,z:null,tm:null};
+
+/* ===== Navegação ===== */
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{S.tab=b.dataset.t;render()});
+function render(){
+  clearInterval(S.tm);
+  document.querySelectorAll('nav button').forEach(b=>{if(b.dataset.t===S.tab)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});
+  const n=Object.keys(ld('erros',{})).length,bd=$('#bd');bd.hidden=!n;bd.textContent=n;
+  ({sim:vSim,err:vErr,red:vRed,edi:vEdi})[S.tab]();
+  window.scrollTo(0,0);
+}
+
+/* ===== Simulado ===== */
+function vSim(){
+  if(S.z&&S.z.done)return vRes();
+  if(S.z)return vQ();
+  const st=ld('stats',{});
+  const cards=Object.entries(AREAS).map(([k,[nm,c]])=>{const s=st[k]||{c:0,t:0},p=s.t?Math.round(s.c/s.t*100):0;
+    return `<div class="stat"><span>${nm}</span><b>${s.t?p+'%':'–'}</b><i style="--p:${p}%;--c:${c}"></i><small>${s.c} de ${s.t} corretas</small></div>`}).join('');
+  const chips=[['all','Todas as áreas'],...Object.entries(AREAS).map(([k,v])=>[k,v[0]])].map(([k,nm])=>`<button class="chip" data-a="${k}" aria-pressed="${S.sel===k}">${nm}</button>`).join('');
+  const nn=[5,10,20].map(n=>`<button class="chip" data-n="${n}" aria-pressed="${S.n===n}">${n} questões</button>`).join('');
+  $('#app').innerHTML=`<h1>Simulado ENEM</h1><p class="lead">Responda, veja o gabarito comentado na hora e deixe os erros irem sozinhos para o seu caderno.</p>
+  <div class="grid">${cards}</div>
+  <h2>Monte seu simulado</h2><div class="card"><div class="chips" id="ca">${chips}</div><div class="chips" id="cn">${nn}</div>
+  <button class="btn" id="go">Começar simulado</button></div>`;
+  $('#ca').onclick=e=>{const b=e.target.closest('[data-a]');if(b){S.sel=b.dataset.a;vSim()}};
+  $('#cn').onclick=e=>{const b=e.target.closest('[data-n]');if(b){S.n=+b.dataset.n;vSim()}};
+  $('#go').onclick=()=>{
+    let ids=Q.map((_,i)=>i).filter(i=>S.sel==='all'||Q[i].a===S.sel);
+    start(shuf(ids).slice(0,S.n),false);
+  };
+}
+function start(ids,review){
+  S.z={list:ids,ords:ids.map(()=>shuf([0,1,2,3,4])),i:0,hits:0,res:[],t0:Date.now(),review,ans:null,done:false};
+  render();
+}
+function vQ(){
+  const z=S.z,qq=Q[z.list[z.i]],o=z.ords[z.i],[nm,c]=AREAS[qq.a];
+  $('#app').innerHTML=`<div class="top"><span>${z.review?'Revisão · ':''}Questão ${z.i+1} de ${z.list.length}</span><span id="tm">0:00</span></div>
+  <div class="bar" role="progressbar"><i style="width:${z.i/z.list.length*100}%"></i></div>
+  <div class="card" style="margin-top:14px"><span class="tag" style="--c:${c}">${nm}</span>
+  <p class="q">${esc(qq.t)}</p>
+  <div id="alts">${o.map((k,j)=>`<button class="alt" data-j="${j}"><b>${L[j]}</b><span>${esc(qq.o[k])}</span></button>`).join('')}</div>
+  <div id="fb"></div></div>
+  <button class="btn ghost sm" id="quit">Encerrar simulado</button>`;
+  const tick=()=>{const s=Math.floor((Date.now()-z.t0)/1000);$('#tm').textContent=Math.floor(s/60)+':'+String(s%60).padStart(2,'0')};
+  tick();S.tm=setInterval(tick,1000);
+  $('#alts').onclick=e=>{const b=e.target.closest('.alt');if(b&&!z.ans)pick(+b.dataset.j)};
+  $('#quit').onclick=()=>{if(confirm('Encerrar o simulado agora? As respostas já dadas ficam salvas.')){z.list=z.list.slice(0,z.res.length);z.i=z.res.length;finish()}};
+}
+function pick(j){
+  const z=S.z,id=z.list[z.i],qq=Q[id],o=z.ords[z.i],ok=o[j]===0;z.ans=true;
+  if(ok)z.hits++;z.res.push({id,ok});
+  const st=ld('stats',{});st[qq.a]=st[qq.a]||{c:0,t:0};st[qq.a].t++;if(ok)st[qq.a].c++;sv('stats',st);
+  const er=ld('erros',{});
+  if(!ok)er[id]={n:(er[id]?.n||0)+1,d:new Date().toISOString().slice(0,10),mine:qq.o[o[j]]};
+  else if(z.review)delete er[id];
+  sv('erros',er);
+  document.querySelectorAll('.alt').forEach((b,i)=>{b.disabled=true;if(o[i]===0)b.classList.add('ok');else if(i===j)b.classList.add('no')});
+  const last=z.i+1>=z.list.length;
+  $('#fb').innerHTML=`<div class="fb ${ok?'ok':'no'}"><strong>${ok?'Correto!':'Resposta certa: alternativa '+L[o.indexOf(0)]+'.'}</strong><br>${esc(qq.e)}${!ok?'<br><span class="mu">Esta questão foi para o seu Caderno de Erros.</span>':''}</div>
+  <button class="btn" id="nx">${last?'Ver resultado':'Próxima questão'}</button>`;
+  $('#nx').onclick=()=>{last?finish():(z.i++,z.ans=null,render())};
+  $('#nx').focus();
+  const bd=$('#bd'),n=Object.keys(er).length;bd.hidden=!n;bd.textContent=n;
+}
+function finish(){S.z.done=true;S.z.secs=Math.floor((Date.now()-S.z.t0)/1000);render()}
+function vRes(){
+  const z=S.z,t=z.res.length,p=t?Math.round(z.hits/t*100):0;
+  const by={};z.res.forEach(r=>{const a=Q[r.id].a;by[a]=by[a]||{c:0,t:0};by[a].t++;if(r.ok)by[a].c++});
+  const rows=Object.entries(by).map(([k,v])=>`<div class="ck"><span style="flex:1">${AREAS[k][0]}</span><b>${v.c}/${v.t}</b></div>`).join('');
+  $('#app').innerHTML=`<h1>Resultado</h1><div class="card"><div class="big">${z.hits}/${t}</div>
+  <p>${p}% de acertos em ${Math.floor(z.secs/60)} min ${z.secs%60} s. ${p>=70?'Ótimo ritmo, continue assim.':p>=40?'Bom caminho: revise o Caderno de Erros.':'Use as explicações para fechar as lacunas e tente de novo.'}</p></div>
+  <div class="card">${rows||'<p class="mu">Nenhuma questão respondida.</p>'}</div>
+  <div class="row"><button class="btn" id="nv">Novo simulado</button><button class="btn ghost" id="ce">Abrir Caderno de Erros</button></div>`;
+  $('#nv').onclick=()=>{S.z=null;render()};$('#ce').onclick=()=>{S.z=null;S.tab='err';render()};
+}
+
+/* ===== Caderno de Erros ===== */
+function vErr(){
+  const er=ld('erros',{}),ids=Object.keys(er).map(Number);
+  if(!ids.length){$('#app').innerHTML=`<h1>Caderno de Erros</h1><div class="card empty">Nenhum erro por aqui ainda. As questões que você errar no simulado aparecem automaticamente neste caderno.<br><br><button class="btn" id="g">Fazer um simulado</button></div>`;
+    $('#g').onclick=()=>{S.tab='sim';render()};return}
+  const items=ids.map(id=>{const x=Q[id],[nm,c]=AREAS[x.a];
+    return `<div class="card err"><span class="tag" style="--c:${c}">${nm}</span> <span class="mu"> · errou ${er[id].n}× · último em ${er[id].d}</span>
+    <p class="q" style="margin:8px 0">${esc(x.t)}</p>
+    <p><span style="color:var(--er)">Sua resposta:</span> ${esc(er[id].mine||'—')}</p>
+    <p><span style="color:var(--ok)">Gabarito:</span> ${esc(x.o[0])}</p>
+    <div class="fb">${esc(x.e)}</div><button class="btn ghost sm" data-d="${id}">Já domino este conteúdo</button></div>`}).join('');
+  $('#app').innerHTML=`<h1>Caderno de Erros</h1><p class="lead">${ids.length} questão(ões) para revisar. Acertar na revisão remove a questão do caderno.</p>
+  <div class="row" style="margin-bottom:16px"><button class="btn" id="rv">Refazer erros</button><button class="btn ghost" id="cl">Limpar caderno</button></div>${items}`;
+  $('#rv').onclick=()=>{S.tab='sim';start(shuf(ids),true)};
+  $('#cl').onclick=()=>{if(confirm('Apagar todo o Caderno de Erros?')){sv('erros',{});render()}};
+  $('#app').onclick=e=>{const b=e.target.closest('[data-d]');if(b){const m=ld('erros',{});delete m[b.dataset.d];sv('erros',m);render()}};
+}
+
+/* ===== Edital Verticalizado ===== */
+function cnt(){document.querySelectorAll('details.card').forEach(d=>{const a=d.querySelectorAll('input').length,c=d.querySelectorAll('input:checked').length;d.querySelector('em').textContent=c+'/'+a})}
+function vEdi(){
+  const d=ld('edital',{});
+  const bl=ED.map(([t,it],b)=>`<details class="card" open><summary><span>${t}</span><em></em></summary>${it.map(([n,h],i)=>`<label class="ck"><input type="checkbox" data-e="${b}_${i}" ${d[b+'_'+i]?'checked':''}><span><b>${n}</b><small>${h}</small></span></label>`).join('')}</details>`).join('');
+  $('#app').innerHTML=`<h1>Edital Verticalizado</h1><p class="lead">Matemática organizada em blocos. Marque cada tópico quando dominar e acompanhe seu avanço.</p>
+  <div class="card"><div class="top" style="margin:0 0 8px"><span>Progresso geral</span><b id="eo" style="color:var(--ac)"></b></div><div class="bar"><i id="ep"></i></div></div>${bl}
+  <button class="btn ghost sm" id="ez">Zerar progresso</button>`;
+  const upd=()=>{cnt();const a=document.querySelectorAll('[data-e]').length,c=document.querySelectorAll('[data-e]:checked').length,p=Math.round(c/a*100);$('#eo').textContent=c+' de '+a+' tópicos · '+p+'%';$('#ep').style.width=p+'%'};
+  document.querySelectorAll('[data-e]').forEach(i=>i.onchange=()=>{if(i.checked)d[i.dataset.e]=1;else delete d[i.dataset.e];sv('edital',d);upd()});
+  $('#ez').onclick=()=>{if(confirm('Zerar todo o progresso do edital?')){sv('edital',{});vEdi()}};
+  upd();
+}
+
+/* ===== Laboratório de Redação ===== */
+function vRed(){
+  const R=ld('red',{tema:0,d:{}});
+  const opts=TEMAS.map((t,i)=>`<option value="${i}" ${i===R.tema?'selected':''}>${esc(t[0])}</option>`).join('');
+  const gd=GUIA.map(([t,it],g)=>`<details class="card" open><summary><span>${t}</span><em></em></summary>${it.map((x,i)=>`<label class="ck"><input type="checkbox" data-k="g${g}_${i}"><span>${x}</span></label>`).join('')}</details>`).join('');
+  $('#app').innerHTML=`<h1>Redação Nota 1000</h1><p class="lead">Escreva sua dissertativa-argumentativa e acompanhe o tamanho na folha oficial de 30 linhas.</p>
+  <label class="mu" for="tm2" style="font:500 .9rem var(--h)">Tema</label><select id="tm2">${opts}</select>
+  <p class="mu" id="hint" style="margin:8px 0 14px;font-size:.92rem"></p>
+  <textarea id="tx" placeholder="Introdução com tese, dois parágrafos de desenvolvimento e conclusão com proposta de intervenção..." spellcheck="true"></textarea>
+  <div class="rs"><div><b id="w">0</b><span>palavras</span></div><div><b id="ch">0</b><span>caracteres</span></div><div><b id="ln">0/30</b><span>linhas estimadas</span></div></div>
+  <div class="bar"><i id="pb"></i></div><p class="msg" id="ms"></p>
+  <div class="row"><button class="btn ghost sm" id="cp">Copiar texto</button><button class="btn ghost sm" id="lp">Limpar redação</button><span class="mu" id="sv" style="font-size:.85rem"></span></div>
+  <h2>Guia estrutural dos 4 parágrafos</h2>${gd}
+  <p class="mu" style="font-size:.85rem">Estimativa: cerca de 75 caracteres por linha, com cada parágrafo começando em uma linha nova. A contagem real depende da sua letra. Textos com 7 linhas ou menos são considerados insuficientes.</p>`;
+  const tx=$('#tx'),sel=$('#tm2');
+  const cur=()=>R.d[R.tema]||(R.d[R.tema]={t:'',k:{}});
+  function load(){const d=cur();tx.value=d.t;$('#hint').textContent=TEMAS[R.tema][1];
+    document.querySelectorAll('[data-k]').forEach(i=>i.checked=!!d.k[i.dataset.k]);stats();cnt()}
+  function stats(){
+    const t=tx.value,w=(t.trim().match(/\S+/g)||[]).length;
+    const lines=t.split(/\n+/).filter(p=>p.trim()).reduce((s,p)=>s+Math.ceil(p.trim().length/75),0);
+    $('#w').textContent=w;$('#ch').textContent=t.length;$('#ln').textContent=lines+'/30';
+    const pb=$('#pb');pb.style.width=Math.min(lines/30*100,100)+'%';
+    pb.style.background=lines>30?'var(--er)':lines>=25?'var(--ok)':lines>=8?'var(--ac)':'var(--mu)';
+    $('#ms').textContent=!lines?'Comece a escrever: o ideal é usar de 25 a 30 linhas.':lines<=7?'Atenção: até 7 linhas o texto é considerado insuficiente.':lines<25?'Falta pouco para preencher a folha: desenvolva mais os argumentos.':lines<=30?'Tamanho ideal para a folha oficial.':'Passou de 30 linhas: o excedente não é corrigido. Reduza o texto.';
+  }
+  let tmr;
+  function save(){const ok=sv('red',R);$('#sv').textContent=ok?'Salvo às '+new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}):'Não foi possível salvar neste navegador.'}
+  tx.oninput=()=>{cur().t=tx.value;stats();clearTimeout(tmr);$('#sv').textContent='Salvando...';tmr=setTimeout(save,500)};
+  sel.onchange=()=>{R.tema=+sel.value;save();load()};
+  document.querySelectorAll('[data-k]').forEach(i=>i.onchange=()=>{cur().k[i.dataset.k]=i.checked;cnt();save()});
+  $('#cp').onclick=async()=>{try{await navigator.clipboard.writeText(tx.value);$('#sv').textContent='Texto copiado.'}catch(e){tx.select();$('#sv').textContent='Selecione e copie manualmente.'}};
+  $('#lp').onclick=()=>{if(confirm('Apagar o texto e o checklist deste tema?')){R.d[R.tema]={t:'',k:{}};save();load()}};
+  load();
+}
+
+render();
+</script>
+</body>
+</html>

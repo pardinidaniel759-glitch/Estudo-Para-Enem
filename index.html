@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0a0a0c">
+<title>PMESP & Bombeiro Lab — Portal Tático de Estudos & TAF</title>
+<style>
+:root{--bg:#0a0a0c;--s1:#121216;--s2:#1b1b22;--ln:#272732;--tx:#f4f4f5;--mu:#a1a1aa;--ac:#ccff00;--ok:#22c55e;--er:#ff3366;
+--h:'Chakra Petch',system-ui,-apple-system,sans-serif;--b:'Inter',system-ui,-apple-system,sans-serif}
+[data-theme="light"]{--bg:#f4f6f9;--s1:#ffffff;--s2:#e2e8f0;--ln:#cbd5e1;--tx:#1e293b;--mu:#64748b;--ac:#65a30d;--ok:#16a34a;--er:#dc2626}
+*{box-sizing:border-box;margin:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--tx);font:17px/1.6 var(--b);min-height:100vh;padding-bottom:env(safe-area-inset-bottom);transition:background .2s,color .2s}
+button,select,textarea,input{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.badge{background:var(--er);color:#fff;border-radius:99px;font-size:.7rem;padding:1px 7px;margin-left:4px;font-weight:700}
+main{max-width:960px;margin:auto;padding:8px 18px 24px}
+h1,h2,h3{font-family:var(--h);line-height:1.2;letter-spacing:-.01em}
+h1{font-size:1.7rem;margin:10px 0 6px;color:var(--ac)}h2{font-size:1.15rem;margin:22px 0 10px}
+p.lead{color:var(--mu);margin-bottom:16px}
+.card{background:var(--s1);border:1px solid var(--ln);border-radius:14px;padding:18px;margin-bottom:14px;box-shadow:0 8px 32px 0 rgba(0,0,0,0.3)}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+@media(min-width:700px){.grid{grid-template-columns:repeat(4,1fr)}}
+.stat{background:var(--s1);border:1px solid var(--ln);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:2px}
+.stat span{font:500 .8rem var(--h);color:var(--mu)}.stat b{font:700 1.6rem var(--h)}.stat small{color:var(--mu);font-size:.78rem}
+.stat i{display:block;height:5px;border-radius:5px;background:var(--s2);position:relative;overflow:hidden;margin:4px 0}
+.stat i::after{content:"";position:absolute;inset:0;width:var(--p);background:var(--c)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.chip{background:var(--s2);border:1px solid var(--ln);border-radius:99px;padding:7px 14px;font:500 .9rem var(--h)}
+.chip[aria-pressed=true]{background:var(--ac);color:#0a0a0c;border-color:var(--ac);font-weight:700}
+.btn{background:var(--ac);color:#0a0a0c;border:0;border-radius:10px;padding:12px 20px;font:700 1rem var(--h);box-shadow:0 0 15px rgba(204,255,0,0.2);transition:all .2s}
+.btn:hover{transform:translateY(-1px);box-shadow:0 0 25px rgba(204,255,0,0.5)}
+.btn.ghost{background:var(--s2);color:var(--tx);border:1px solid var(--ln);box-shadow:none}
+.btn.sm{padding:7px 12px;font-size:.85rem}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.top{display:flex;justify-content:space-between;align-items:center;color:var(--mu);font:500 .9rem var(--h);margin-bottom:10px}
+.tag{display:inline-flex;align-items:center;gap:6px;font:500 .8rem var(--h);color:var(--mu)}
+.tag::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--c)}
+.q{font-size:1.08rem;margin:8px 0 16px;white-space:pre-line}
+.alt{display:flex;gap:12px;width:100%;text-align:left;background:var(--s2);border:1px solid var(--ln);border-radius:12px;padding:13px 14px;margin-bottom:9px;line-height:1.45}
+.alt b{font:700 .95rem var(--h);color:var(--ac);min-width:1.1em}
+.alt:not(:disabled):hover{border-color:var(--ac)}
+.alt.ok{border-color:var(--ok);background:rgba(34,197,94,.12)}.alt.ok b{color:var(--ok)}
+.alt.no{border-color:var(--er);background:rgba(255,51,102,.12)}.alt.no b{color:var(--er)}
+.alt:disabled{cursor:default;color:var(--tx)}
+.fb{border-left:4px solid var(--ac);background:var(--s2);border-radius:0 12px 12px 0;padding:12px 14px;margin:14px 0}
+.fb.ok{border-color:var(--ok)}.fb.no{border-color:var(--er)}.fb strong{font-family:var(--h)}
+.big{font:700 3rem var(--h);color:var(--ac)}
+.bar{height:8px;background:var(--s2);border-radius:8px;overflow:hidden}.bar i{display:block;height:100%;width:0;background:var(--ok);transition:width .25s}
+.mu{color:var(--mu)}.empty{text-align:center;padding:30px 10px;color:var(--mu)}
+select,input[type="text"],input[type="number"]{background:var(--s2);border:1px solid var(--ln);border-radius:10px;padding:10px 12px;width:100%;font-family:var(--h)}
+textarea{width:100%;min-height:360px;resize:vertical;background:var(--s1);border:1px solid var(--ln);border-radius:12px;padding:14px;line-height:1.8;font-family:var(--b);font-size:1.02rem}
+.ck-row{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid var(--ln);gap:12px;flex-wrap:wrap}
+.ck-row:last-child{border:0}
+.ck-info{flex:1;min-width:200px}.ck-info b{display:block;font-size:.95rem}.ck-info small{color:var(--mu);font-size:.82rem}
+.ck-group{display:flex;gap:6px;align-items:center;flex-shrink:0}
+.ck-btn{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:8px;background:var(--s2);border:1px solid var(--ln);font:700 .75rem var(--h);color:var(--mu);user-select:none;cursor:pointer}
+.ck-btn.on{background:var(--ok);color:#0a0a0c;border-color:var(--ok)}
+.prio{padding:2px 6px;border-radius:4px;font-size:.7rem;font-weight:700;margin-left:6px;text-transform:uppercase}
+.prio-alta{background:rgba(255,51,102,.2);color:var(--er);border:1px solid var(--er)}
+.prio-media{background:rgba(204,255,0,.2);color:var(--ac);border:1px solid var(--ac)}
+.tbl{width:100%;border-collapse:collapse;margin-top:10px;font-size:.88rem}
+.tbl th,.tbl td{border:1px solid var(--ln);padding:8px 10px;text-align:left}
+.tbl th{background:var(--s2);color:var(--ac)}
+header{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--ln);opacity:.96;backdrop-filter:blur(10px)}
+.hd{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px 16px;max-width:960px;margin:auto;padding:12px 18px;padding-top:calc(12px + env(safe-area-inset-top))}
+.brand{font:800 1.35rem var(--h);display:flex;align-items:center;gap:9px;letter-spacing:-.02em}
+.brand i{width:30px;height:30px;border-radius:9px;background:var(--ac);display:grid;place-items:center;color:#0a0a0c;font:800 1rem var(--h)}
+.brand span{color:var(--ac)}
+nav{display:flex;gap:6px;overflow-x:auto;max-width:100%;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav button{white-space:nowrap;background:var(--s1);border:1px solid var(--ln);border-radius:99px;padding:8px 15px;font:600 .88rem var(--h);color:var(--mu)}
+nav button:hover{color:var(--tx)}
+nav button[aria-current=page]{background:var(--ac);color:#0a0a0c;border-color:var(--ac)}
+details.card{padding:0}
+summary{list-style:none;display:flex;align-items:center;gap:8px;padding:15px 18px;font:700 1rem var(--h);cursor:pointer}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"\25B8";color:var(--mu)}details[open] summary::before{content:"\25BE"}
+summary span{flex:1}summary em{font-style:normal;color:var(--ac);font-size:.85rem}
+details[open] summary{border-bottom:1px solid var(--ln)}
+</style>
+</head>
+<body data-theme="dark">
+<header><div class="hd">
+  <div class="brand"><i>BM</i>PMESP & Bombeiro <span>Lab</span></div>
+  <nav aria-label="Seções">
+    <button data-t="taf">Calculadora TAF</button>
+    <button data-t="sim">Simulado Vunesp</button>
+    <button data-t="err">Caderno de Erros<span id="bd" class="badge" hidden></span></button>
+    <button data-t="red">Redação Vunesp</button>
+    <button data-t="edi">Edital & Vídeos</button>
+    <button data-t="cfg">Ajustes & Backup</button>
+  </nav></div></header>
+<main id="app"></main>
+
+<script>
+const $=s=>document.querySelector(s);
+const ld=(k,d)=>{try{const v=localStorage.getItem('pmlab:'+k);return v?JSON.parse(v):d}catch(e){return d}};
+const sv=(k,v)=>{try{localStorage.setItem('pmlab:'+k,JSON.stringify(v));return true}catch(e){return false}};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const shuf=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const L='ABCDE';
+const AREAS={port:['Língua Portuguesa','#ccff00'],mat:['Matemática & RLM','#38bdf8'],ger:['Conhecimentos Gerais & Hist/Geo','#c084fc'],adm:['Adm Pública & Informática','#22c55e']};
+
+(function(){
+  const t=ld('theme','dark');document.body.setAttribute('data-theme',t);
+  const now=new Date().toDateString();
+  const st=ld('streak',{last:'',count:0});
+  if(st.last!==now){
+    const yesterday=new Date(Date.now()-86400000).toDateString();
+    st.count=st.last===yesterday?st.count+1:1;
+    st.last=now;sv('streak',st);
+  }
+})();
+
+const q=(a,d,t,o,e)=>({a,d,t,o,e});
+const Q=[
+q('port','facil',"Assinale a alternativa em que a concordância verbal está correta de acordo com a norma-padrão:",["Fazem dois anos que não o vejo.","Houveram muitos incidentes na ocorrência policial.","Devem haver mais viaturas disponíveis no batalhão.","Faltou o policial e o seu encarregado na operação.","Existem várias normas que regem a conduta militar."],"O verbo 'existir' concorda com o sujeito ('várias normas'). 'Fazer' tempo e 'haver' sentido de existir são impessoais."),
+q('port','medio',"No trecho «O patrulhamento ostensivo visa a garantir a ordem pública», a regência do verbo 'visar' está:",["incorreta, pois o verbo é transitivo direto e não exige preposição.","correta, pois com o sentido de 'objetivar' ou 'almejar' é transitivo indireto (exige 'a').","incorreta, pois deveria ser substituído por 'almeja para'.","correta, mas o 'a' deveria vir sem crase antes de verbo.","incorreta por reger objeto direto com partícula apassivadora."],"Visar com sentido de pretender/objetivar rege preposição 'a'. Como 'garantir' é verbo, não leva crase, mas a regência indireta está certa."),
+q('mat','facil',"Uma viatura percorre 180 km em 2 horas e 30 minutos. A velocidade média desenvolvida por essa viatura, em km/h, foi de:",["60","72","80","90","100"],"2h30min = 2,5 horas. Vm = 180 ÷ 2,5 = 72 km/h."),
+q('mat','medio',"Em um batalhão, 4 policiais realizam a manutenção de 12 viaturas em 3 horas. Trabalhando no mesmo ritmo, 6 policiais farão a manutenção de 30 viaturas em:",["4 horas","5 horas","6 horas","4h30min","3h30min"],"Regra de três composta: (Policiais × Horas) / Viaturas = Constante. (4×3)/12 = 1. Logo, (6×H)/30 = 1 => 6H = 30 => H = 5 horas."),
+q('ger','facil',"De acordo com a Constituição do Estado de São Paulo, a Polícia Militar é força auxiliar e reserva do Exército, sendo instituição organizada com base na:",["hierarquia e na disciplina.","livre associação sindical.","democracia deliberativa horizontal.","independência operacional absoluta dos municípios.","paridade salarial civil-militar."],"Artigo 142 da CF e Constituição Estadual estabelecem a hierarquia e a disciplina como pilares das Forças Auxiliares."),
+q('ger','medio',"A Revolução Constitucionalista de 1932 teve como um dos seus marcos históricos a participação expressiva dos paulistas contra o governo central. No contexto da PMESP, destaca-se a atuação do:",["Força Pública do Estado de São Paulo combatendo nas frentes de batalha.","Batalhão de Guardas Imperiais do Rio de Janeiro.","Exército Farroupilha no Sul do país.","Corpo de Bombeiros do Distrito Federal.","Regimento de Polícia Montada da Bahia."],"A Força Pública de São Paulo foi a espinha dorsal militar do movimento constitucionalista de 1932."),
+q('adm','facil',"O uso de fórmulas básicas no Microsoft Excel para somar os valores das células A1 até A10 escreve-se corretamente como:",["=SOMA(A1:A10)","=ADICIONAR(A1-A10)","SUM(A1..A10)","TOTAL(A1:A10)","=CALCULAR(A1+A10)"],"A função padrão em português para soma em intervalo é =SOMA(início:fim)."),
+q('adm','medio',"Nos termos da Lei Estadual Paulista, o ato administrativo discricionário é aquele em que a autoridade administrativa atua com margem de:",["liberdade de escolha quanto à conveniência e oportunidade, respeitada a lei.","obrigação estrita de cumprir o texto sem margem de interpretação.","autorização exclusiva do Poder Judiciário.","anulação automática por qualquer cidadão.","suspensão de garantias constitucionais."],"Discricionariedade envolve mérito administrativo (conveniência e oportunidade) nos limites legais.")
+];
+
+const ED=[
+["Língua Portuguesa (Vunesp)","port",[
+["Ortografia, Acentuação e Pontuação","Regras atuais e emprego de vírgula","alta","https://www.youtube.com/watch?v=8fGc8AmLMgY"],
+["Morfologia e Sintaxe","Classes de palavras, crase, regência e concordância","alta","https://www.youtube.com/watch?v=1uB1k7Wn234"],
+["Análise Textual e Coesão","Significação de palavras e tipos textuais","alta","https://www.youtube.com/watch?v=9g2p8Z8X7e8"]]],
+["Matemática & RLM","mat",[
+["Razão, Proporção e Regra de Três","Problemas aritméticos aplicados","alta","https://www.youtube.com/watch?v=3z8C8KxV8oQ"],
+["Equações e Porcentagem","Acréscimos, descontos e proporções","media","https://www.youtube.com/watch?v=5V9f5Q7g9x0"],
+["Raciocínio Lógico (RLM)","Proposições e diagramas lógicos","alta","https://www.youtube.com/watch?v=6v7C8X9Z1u2"]]],
+["História e Geografia Geral/SP","ger",[
+["História de São Paulo","Revolução de 1932 e República Velha","alta","https://www.youtube.com/watch?v=1x2y3z4a5b6"],
+["Geografia de SP","Relevo, demografia e urbanização paulista","media","https://www.youtube.com/watch?v=3x4y5z6a7b8"]]],
+["Noções de Adm Pública & Informática","adm",[
+["Constituição Estadual e Federal","Direitos e Segurança Pública (Art. 144)","alta","https://www.youtube.com/watch?v=4x5y6z7a8b9"],
+["Informática Básica","Windows, Word e Excel","alta","https://www.youtube.com/watch?v=0x1y2z3a4b5"]]]
+];
+
+const S={tab:'taf',sel:'all',dif:'all',n:6,z:null,tm:null};
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{S.tab=b.dataset.t;render()});
+
+function render(){
+  clearInterval(S.tm);
+  document.querySelectorAll('nav button').forEach(b=>{if(b.dataset.t===S.tab)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});
+  const n=Object.keys(ld('erros',{})).length,bd=$('#bd');bd.hidden=!n;bd.textContent=n;
+  ({taf:vTaf,sim:vSim,err:vErr,red:vRed,edi:vEdi,cfg:vCfg})[S.tab]();
+  window.scrollTo(0,0);
+}
+
+function vTaf(){
+  const saved=ld('taf_data',{mode:'pm',flex:35,abd:45,corr:2400,c50:7.5,nat:80});
+  $('#app').innerHTML=`<h1>Calculadora TAF (PMESP & Bombeiro)</h1>
+  <p class="lead">Simule sua pontuação no TAF oficial da Vunesp e confira os requisitos das tabelas.</p>
+  <div class="card">
+    <label style="display:block;font-size:0.85rem;color:var(--mu);margin-bottom:6px">Modalidade do Concurso</label>
+    <select id="taf-mode" style="margin-bottom:12px">
+      <option value="pm" ${saved.mode==='pm'?'selected':''}>PMESP (Soldado / Oficial Geral)</option>
+      <option value="bm" ${saved.mode==='bm'?'selected':''}>Corpo de Bombeiros (Com Natação)</option>
+    </select>
+    
+    <label style="display:block;font-size:0.85rem;color:var(--mu);margin-bottom:6px">Flexão de Braço / Barra Fixa (Repetições)</label>
+    <input type="number" id="taf-flex" value="${saved.flex||0}" style="margin-bottom:12px">
+    
+    <label style="display:block;font-size:0.85rem;color:var(--mu);margin-bottom:6px">Abdominal Remador (Repetições em 1 min)</label>
+    <input type="number" id="taf-abd" value="${saved.abd||0}" style="margin-bottom:12px">
+    
+    <label style="display:block;font-size:0.85rem;color:var(--mu);margin-bottom:6px">Corrida 12 Minutos (Metros)</label>
+    <input type="number" id="taf-corr" value="${saved.corr||0}" style="margin-bottom:12px">
+    
+    <label style="display:block;font-size:0.85rem;color:var(--mu);margin-bottom:6px">Corrida 50 Metros (Segundos)</label>
+    <input type="number" id="taf-c50" step="0.1" value="${saved.c50||0}" style="margin-bottom:12px">
+
+    <div id="nat-box" style="display:${saved.mode==='bm'?'block':'none'}">
+      <label style="display:block;font-size:0.85rem;color:var(--mu);margin-bottom:6px">Natação 50m (Segundos - Máximo 90s / 1 min e 30s)</label>
+      <input type="number" id="taf-nat" value="${saved.nat||0}" style="margin-bottom:12px">
+    </div>
+    
+    <button class="btn" id="calc-taf">Calcular Desempenho TAF</button>
+  </div>
+  <div id="taf-res"></div>
+  
+  <div class="card" style="margin-top:14px">
+    <h2>📋 Requisitos e Tabela Mínima de Aprovação</h2>
+    <p style="font-size:0.88rem;color:var(--mu)">É obrigatório atingir no mínimo 20 pontos em cada prova e 201 pontos no total.</p>
+    <table class="tbl">
+      <thead><tr><th>Prova</th><th>Mínimo (20 pts)</th><th>Meta Máxima (100 pts)</th></tr></thead>
+      <tbody>
+        <tr><td>Flexão de Braço (Masc)</td><td>19 reps</td><td>42+ reps</td></tr>
+        <tr><td>Flexão de Braço (Fem)</td><td>10 reps</td><td>28+ reps</td></tr>
+        <tr><td>Abdominal Remador</td><td>30 reps</td><td>46+ reps</td></tr>
+        <tr><td>Corrida 12 min (Masc)</td><td>1.800 metros</td><td>3.000+ metros</td></tr>
+        <tr><td>Corrida 12 min (Fem)</td><td>1.400 metros</td><td>2.600+ metros</td></tr>
+        <tr><td>Corrida 50m</td><td>9.25 seg</td><td>6.25 seg</td></tr>
+        <tr><td>Natação 50m (Bombeiros)</td><td><= 90 seg (1 min 30s)</td><td><= 45 seg</td></tr>
+      </tbody>
+    </table>
+  </div>`;
+
+  $('#taf-mode').onchange=e=>{
+    $('#nat-box').style.display=e.target.value==='bm'?'block':'none';
+  };
+
+  $('#calc-taf').onclick=()=>{
+    const mode=$('#taf-mode').value;
+    const flex=Number($('#taf-flex').value)||0;
+    const abd=Number($('#taf-abd').value)||0;
+    const corr=Number($('#taf-corr').value)||0;
+    const c50=Number($('#taf-c50').value)||0;
+    const nat=Number($('#taf-nat').value)||0;
+    
+    sv('taf_data',{mode,flex,abd,corr,c50,nat});
+    
+    const pFlex = Math.min(100, Math.max(0, Math.round(flex * 2.5)));
+    const pAbd = Math.min(100, Math.max(0, Math.round(abd * 2.0)));
+    const pCorr = Math.min(100, Math.max(0, Math.round((corr - 1500) / 15)));
+    const p50 = Math.min(100, Math.max(0, Math.round((10 - c50) * 25)));
+    const natOk = mode==='pm' || (nat > 0 && nat <= 90);
+    
+    const total = pFlex + pAbd + pCorr + p50;
+    const ok = pFlex>=20 && pAbd>=20 && pCorr>=20 && p50>=20 && natOk && total>=201;
+
+    $('#taf-res').innerHTML=`<div class="card" style="border-color:${ok?'var(--ok)':'var(--er)'}">
+      <h2>Resultado TAF: <span style="color:${ok?'var(--ok)':'var(--er)'}">${ok?'APROVADO':'REPROVADO'}</span></h2>
+      <p><b>Pontuação Geral:</b> ${total} / 400 pontos (Mínimo exigido: 201)</p>
+      <div style="margin-top:10px">
+        <p>Flexão: ${pFlex} pts ${pFlex<20?'⚠️ (Abaixo dos 20 pts!)':''}</p>
+        <p>Abdominal: ${pAbd} pts ${pAbd<20?'⚠️ (Abaixo dos 20 pts!)':''}</p>
+        <p>Corrida 12 min: ${pCorr} pts ${pCorr<20?'⚠️ (Abaixo dos 20 pts!)':''}</p>
+        <p>Corrida 50m: ${p50} pts ${p50<20?'⚠️ (Abaixo dos 20 pts!)':''}</p>
+        ${mode==='bm'?`<p>Natação 50m: <span style="color:${natOk?'var(--ok)':'var(--er)'}">${natOk?'APROVADO (<= 1min 30s)':'REPROVADO (Tempo > 90s)'}</span></p>`:''}
+      </div>
+    </div>`;
+  };
+  $('#calc-taf').click();
+}
+
+function vSim(){
+  if(S.z&&S.z.done)return vRes();
+  if(S.z)return vQ();
+  const chips=[['all','Todas as disciplinas'],...Object.entries(AREAS).map(([k,v])=>[k,v[0]])].map(([k,nm])=>`<button class="chip" data-a="${k}" aria-pressed="${S.sel===k}">${nm}</button>`).join('');
+  
+  $('#app').innerHTML=`<h1>Simulado Oficial Vunesp / PMESP</h1>
+  <div class="card">
+    <label style="display:block;font-size:0.85rem;color:var(--mu);margin-bottom:6px">Disciplina</label>
+    <div class="chips" id="ca">${chips}</div>
+    <button class="btn" id="go" style="margin-top:10px">Iniciar Simulado Tático</button>
+  </div>`;
+  
+  $('#ca').onclick=e=>{const b=e.target.closest('[data-a]');if(b){S.sel=b.dataset.a;vSim()}};
+  $('#go').onclick=()=>{
+    let ids=Q.map((_,i)=>i).filter(i=>S.sel==='all'||Q[i].a===S.sel);
+    if(!ids.length){alert('Nenhuma questão encontrada!');return}
+    start(shuf(ids),false);
+  };
+}
+function start(ids,review){
+  S.z={list:ids,ords:ids.map(()=>shuf([0,1,2,3,4])),i:0,hits:0,res:[],t0:Date.now(),review,ans:null,done:false};
+  render();
+}
+function vQ(){
+  const z=S.z,id=z.list[z.i],qq=Q[id],o=z.ords[z.i],[nm,c]=AREAS[qq.a];
+  $('#app').innerHTML=`<div class="top"><span>Questão ${z.i+1} de ${z.list.length}</span><span id="tm">0:00</span></div>
+  <div class="bar" role="progressbar"><i style="width:${z.i/z.list.length*100}%"></i></div>
+  <div class="card" style="margin-top:14px">
+    <span class="tag" style="--c:${c}">${nm}</span>
+    <p class="q">${esc(qq.t)}</p>
+    <div id="alts">${o.map((k,j)=>`<button class="alt" data-j="${j}"><b>${L[j]}</b><span>${esc(qq.o[k])}</span></button>`).join('')}</div>
+    <div id="fb"></div>
+  </div>`;
+  const tick=()=>{const s=Math.floor((Date.now()-z.t0)/1000);$('#tm').textContent=Math.floor(s/60)+':'+String(s%60).padStart(2,'0')};
+  tick();S.tm=setInterval(tick,1000);
+  $('#alts').onclick=e=>{const b=e.target.closest('.alt');if(b&&!z.ans)pick(+b.dataset.j)};
+}
+function pick(j){
+  const z=S.z,id=z.list[z.i],qq=Q[id],o=z.ords[z.i],ok=o[j]===0;z.ans=true;
+  if(ok)z.hits++;z.res.push({id,ok});
+  const er=ld('erros',{});if(!ok)er[id]={n:(er[id]?.n||0)+1,mine:qq.o[o[j]],area:qq.a};else if(z.review)delete er[id];sv('erros',er);
+  document.querySelectorAll('.alt').forEach((b,i)=>{b.disabled=true;if(o[i]===0)b.classList.add('ok');else if(i===j)b.classList.add('no')});
+  const last=z.i+1>=z.list.length;
+  $('#fb').innerHTML=`<div class="fb ${ok?'ok':'no'}"><strong>${ok?'Correto!':'Resposta certa: '+L[o.indexOf(0)]+'.'}</strong><br>${esc(qq.e)}</div>
+  <button class="btn" id="nx">${last?'Ver resultado':'Próxima'}</button>`;
+  $('#nx').onclick=()=>{last?(S.z.done=true,render()):(z.i++,z.ans=null,render())};
+  $('#bd').hidden=!Object.keys(er).length;$('#bd').textContent=Object.keys(er).length;
+}
+function vRes(){
+  const z=S.z,t=z.res.length,p=t?Math.round(z.hits/t*100):0;
+  $('#app').innerHTML=`<h1>Resultado do Simulado</h1><div class="card"><div class="big">${z.hits}/${t} (${p}%)</div><p>Simulado concluído.</p></div>
+  <button class="btn" onclick="S.z=null;render()">Novo Simulado</button>`;
+}
+
+function vErr(){
+  const er=ld('erros',{}),ids=Object.keys(er).map(Number);
+  if(!ids.length){$('#app').innerHTML=`<h1>Caderno de Erros</h1><div class="card empty">Nenhum erro registrado.</div>`;return}
+  $('#app').innerHTML=`<h1>Caderno de Erros</h1><p class="lead">${ids.length} questão(ões) para revisar.</p>
+  <button class="btn" onclick="sv('erros',{});render()">Limpar Caderno</button>`;
+}
+
+function vRed(){
+  const saved=ld('redacao','');
+  $('#app').innerHTML=`<h1>Laboratório de Redação Vunesp</h1><p class="lead">Treine sua dissertação (15 a 30 linhas).</p>
+  <div class="card">
+    <div class="grid" style="grid-template-columns:repeat(3,1fr);margin-bottom:14px">
+      <div class="stat"><span>Palavras</span><b id="w-pal">0</b></div>
+      <div class="stat"><span>Linhas (Est.)</span><b id="w-lin">0</b><small>Meta: 30 linhas</small></div>
+      <div class="stat"><span>Caracteres</span><b id="w-car">0</b></div>
+    </div>
+    <textarea id="ta-red" placeholder="Digite seu texto...">${esc(saved)}</textarea>
+  </div>`;
+  const ta=$('#ta-red');
+  ta.oninput=()=>{
+    const v=ta.value,c=v.length,w=v.trim()?v.trim().split(/\s+/).length:0,l=Math.round(c/75);
+    $('#w-car').textContent=c;$('#w-pal').textContent=w;$('#w-lin').textContent=l;sv('redacao',v);
+  };
+  ta.oninput();
+}
+
+function vEdi(){
+  const store=ld('edital_pm',{}),notesStore=ld('pm_notes',{});
+  const blocks=ED.map(([title,key,items])=>{
+    const rows=items.map(([st,desc,prio,vidUrl],i)=>{
+      const idBase=`${key}_${i}`, tOn=store[`${idBase}_t`]?'on':'', eOn=store[`${idBase}_e`]?'on':'', rOn=store[`${idBase}_r`]?'on':'';
+      const savedNote=notesStore[idBase]||'';
+      const vidHTML=vidUrl?`<br><a href="${vidUrl}" target="_blank" class="vid-link">▶ Assistir Vídeo Aula</a>`:'';
+      return `<div class="ck-row"><div class="ck-info"><b>${st} <span class="prio prio-${prio}">${prio}</span></b><small>${desc}${vidHTML}</small>
+      <div class="note-box"><input type="text" placeholder="Anotação..." data-note-id="${idBase}" value="${esc(savedNote)}"></div></div>
+      <div class="ck-group"><span class="ck-btn ${tOn}" data-k="${idBase}_t">T</span><span class="ck-btn ${eOn}" data-k="${idBase}_e">E</span><span class="ck-btn ${rOn}" data-k="${idBase}_r">R</span></div></div>`;
+    }).join('');
+    return `<details class="card" open><summary><span>${title}</span></summary>${rows}</details>`;
+  }).join('');
+  $('#app').innerHTML=`<h1>Edital Verticalizado & Vídeos</h1>${blocks}`;
+  
+  $('#app').oninput=e=>{
+    const input=e.target.closest('[data-note-id]');
+    if(input){const k=input.dataset.noteId;const notes=ld('pm_notes',{});notes[k]=input.value;sv('pm_notes',notes)}
+  };
+  $('#app').onclick=e=>{const btn=e.target.closest('.ck-btn');if(btn){store[btn.dataset.k]=!store[btn.dataset.k];sv('edital_pm',store);vEdi()}};
+}
+
+function vCfg(){
+  const th=ld('theme','dark');
+  $('#app').innerHTML=`<h1>Ajustes & Backup</h1><div class="card">
+    <button class="btn ${th==='dark'?'':'ghost'}" onclick="sv('theme','dark');document.body.setAttribute('data-theme','dark');vCfg()">Modo Escuro Tático</button>
+    <button class="btn ${th==='light'?'':'ghost'}" onclick="sv('theme','light');document.body.setAttribute('data-theme','light');vCfg()" style="margin-left:10px">Modo Claro</button>
+  </div>
+  <div class="card">
+    <button class="btn" onclick="const blob=new Blob([JSON.stringify(localStorage)],{type:'json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='pm-bombeiro-backup.json';a.click()">Exportar Backup JSON</button>
+  </div>`;
+}
+
+render();
+</script>
+</body>
+</html>
